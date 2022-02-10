@@ -1,0 +1,48 @@
+cc_library_shared {
+
+    srcs: ["FLVExtractor.cpp"],
+
+    include_dirs: [
+        "frameworks/av/media/libstagefright/include",
+        "frameworks/av/media/libstagefright/flac/dec",
+    ],
+
+    shared_libs: [
+        "liblog",
+        "libmediandk",
+        "libmedia",
+        "libbinder",
+        "libcutils",
+    ],
+
+    static_libs: [
+        "libutils",
+        "libfifo",
+        "libstagefright_foundation",
+        "libstagefright_metadatautils",
+    ],
+
+    name: "libflvextractor",
+    relative_install_path: "extractors",
+
+    compile_multilib: "first",
+
+    cflags: [
+        "-Werror",
+        "-Wall",
+        "-fvisibility=hidden",
+    ],
+    version_script: "exports.lds",
+
+    sanitize: {
+        cfi: true,
+        misc_undefined: [
+            "unsigned-integer-overflow",
+            "signed-integer-overflow",
+        ],
+        diag: {
+            cfi: true,
+        },
+    },
+
+}
